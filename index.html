@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Guesser Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        #result {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Number Guesser Game</h1>
+    <p>Guess a number between 1 and 10:</p>
+    <input type="number" id="guessInput" min="1" max="10">
+    <button onclick="checkGuess()">Submit Guess</button>
+    <button onclick="resetGame()">Reset Game</button>
+    <p id="result"></p>
+
+    <script>
+        // Generate a random number between 1 and 10
+        let randomNumber = generateRandomNumber();
+        let guessedNumbers = [];
+
+        // Function to generate a new random number
+        function generateRandomNumber() {
+            return Math.floor(Math.random() * 10) + 1;
+        }
+
+        // Function to check the user's guess
+        function checkGuess() {
+            const userGuess = parseInt(document.getElementById("guessInput").value);
+
+            if (isNaN(userGuess) || userGuess < 1 || userGuess > 10) {
+                document.getElementById("result").innerText = "Please enter a valid number between 1 and 10.";
+                return;
+            }
+
+            if (guessedNumbers.includes(userGuess)) {
+                document.getElementById("result").innerText = "You already guessed that number. Try a different one.";
+            } else {
+                guessedNumbers.push(userGuess);
+
+                if (userGuess === randomNumber) {
+                    document.getElementById("result").innerText = "Congratulations! You guessed the correct number.";
+                } else {
+                    document.getElementById("result").innerText = `Sorry, the correct number was ${randomNumber}. Try again!`;
+                }
+            }
+        }
+
+        // Function to reset the game
+        function resetGame() {
+            guessedNumbers = [];
+            document.getElementById("guessInput").value = "";
+            document.getElementById("result").innerText = "";
+            randomNumber = generateRandomNumber();
+        }
+    </script>
+</body>
+</html>
