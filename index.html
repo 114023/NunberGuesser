@@ -22,11 +22,13 @@
     <button onclick="checkGuess()">Submit Guess</button>
     <button onclick="resetGame()">Reset Game</button>
     <p id="result"></p>
+    <p id="tries">Number of Tries: 0</p>
 
     <script>
         // Generate a random number between 0 and 100
         let randomNumber = generateRandomNumber();
         let guessedNumbers = [];
+        let tries = 0;
 
         // Function to generate a new random number
         function generateRandomNumber() {
@@ -42,17 +44,21 @@
                 return;
             }
 
+            tries++;
+
             if (guessedNumbers.includes(userGuess)) {
                 document.getElementById("result").innerText = "You already guessed that number. Try a different one.";
             } else {
                 guessedNumbers.push(userGuess);
 
                 if (userGuess === randomNumber) {
-                    document.getElementById("result").innerText = "Congratulations! You guessed the correct number.";
+                    document.getElementById("result").innerText = `Congratulations! You guessed the correct number in ${tries} tries.`;
                 } else {
                     document.getElementById("result").innerText = `Sorry, the correct number was ${randomNumber}. Try again!`;
                 }
             }
+
+            document.getElementById("tries").innerText = `Number of Tries: ${tries}`;
         }
 
         // Function to reset the game
@@ -60,6 +66,8 @@
             guessedNumbers = [];
             document.getElementById("guessInput").value = "";
             document.getElementById("result").innerText = "";
+            document.getElementById("tries").innerText = "Number of Tries: 0";
+            tries = 0;
             randomNumber = generateRandomNumber();
         }
     </script>
